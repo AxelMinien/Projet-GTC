@@ -4,11 +4,11 @@
 
 {% block body %}
     <h1>Projet index</h1>
+    
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Nom</th>
                 <th>Description</th>
                 <th>DateCreation</th>
@@ -16,15 +16,26 @@
             </tr>
         </thead>
         <tbody>
+        <style>
+            body,
+            .bg-primary,
+            .navbar,
+            .btn-primary,
+            .card-header,
+            header {
+                background-color: #8C8E90 !important;
+                border-color: #8C8E90 !important;
+                color: #000 !important;
+            }
+        </style>
         {% for projet in projets %}
             <tr>
-                <td>{{ projet.id }}</td>
                 <td>{{ projet.nom }}</td>
                 <td>{{ projet.description }}</td>
                 <td>{{ projet.dateCreation ? projet.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_projet_show', {'id': projet.id}) }}">show</a>
-                    <a href="{{ path('app_projet_edit', {'id': projet.id}) }}">edit</a>
+                    <a href="{{ path('app_projet_show', {'id': projet.id}) }}"><button class="btn-solid btn-styled theme-info">Show</button>
+                    <a href="{{ path('app_projet_edit', {'id': projet.id}) }}"><button class="btn-solid btn-styled theme-inverse">Edit</button>
                 </td>
             </tr>
         {% else %}
@@ -35,5 +46,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_projet_new') }}">Create new</a>
+    <a href="{{ path('app_projet_new') }}"><button class="btn-solid btn-styled theme-primary">Create New</button>
 {% endblock %}
