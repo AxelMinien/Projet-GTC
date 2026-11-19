@@ -87,3 +87,20 @@
 - Fixtures (comptes de test) : à faire
 - Phase 2 : authentification (make:auth, inscription, rôles, hachage) : à faire
 - Phases 3 à 8 : voters, tâches par projet, notifications, tableau de bord, recherche, tests : à faire
+## 9. Changements récents
+- Projet déplacé dans /var/www/html/taskmanager (serveur PHP intégré, port 8000 conservé)
+- Script GitHub ~/push-github.sh : SRC pointe sur /var/www/html/taskmanager
+- Service systemd facultatif : taskmanager.service (relance le serveur au démarrage)
+- Adminer (facultatif) : http://192.168.105.125:8080, système PostgreSQL, serveur 127.0.0.1, base taskmanager
+- CRUD généré avec make:crud : Projet (/projet), Tache (/tache), Utilisateur (/utilisateur)
+- Formulaires ProjetType et TacheType réécrits : dateCreation retirée (date automatique), enums en listes déroulantes, affecteA facultatif
+- Erreurs rencontrées : dateCreation sans setter, puis syntax error causée par un sed (corrigé en réécrivant les fichiers)
+- À corriger : hachage du mot de passe dans le formulaire Utilisateur (phase 2)
+
+## 10. Avancement
+- Phase 0 : environnement : fait
+- Phase 1 : entités conformes au MCD, migration : fait (validation schema:validate à confirmer)
+- CRUD de base Projet, Tache, Utilisateur : fait (en test)
+- Fixtures (comptes de test) : à faire
+- Phase 2 : authentification (make:auth, inscription, rôles, hachage) : à faire
+- Phases 3 à 8 : voters, tâches par projet, notifications, tableau de bord, recherche, tests : à faire
