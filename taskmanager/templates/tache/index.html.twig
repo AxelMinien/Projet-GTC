@@ -24,8 +24,8 @@
                 <td>{{ tache.id }}</td>
                 <td>{{ tache.titre }}</td>
                 <td>{{ tache.description }}</td>
-                <td>{{ tache.statut }}</td>
-                <td>{{ tache.priorite }}</td>
+                <td>{{ tache.statut.value }}</td>
+                <td>{{ tache.priorite.value }}</td>
                 <td>{{ tache.dateEcheance ? tache.dateEcheance|date('Y-m-d') : '' }}</td>
                 <td>{{ tache.dateCreation ? tache.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
