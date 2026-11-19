@@ -5,7 +5,7 @@
 - Nom d'hôte : pasdebiantrixie
 - IP : 192.168.105.125
 - Accès : SSH via PuTTY, utilisateur root
-- Dossier du projet : /root/taskmanager
+- Dossier du projet : /var/www/html/taskmanager
 - Samba : non installé
 
 ## 2. PostgreSQL 17
@@ -20,14 +20,17 @@
 ## 3. Mailpit
 - SMTP : 127.0.0.1:1025 (MAILER_DSN=smtp://127.0.0.1:1025)
 - Interface web : http://192.168.105.125:8025
-- Installé dans /usr/local/bin/mailpit (service systemd conseillé)
+- Installé dans /usr/local/bin/mailpit (lancement : mailpit &, ou service systemd mailpit si créé)
 
 ## 4. Application
 - URL : http://192.168.105.125:8000
-- Lancement : cd ~/taskmanager && nohup php -S 0.0.0.0:8000 -t public > /tmp/php-server.log 2>&1 &
+- Lancement : automatique au démarrage via le service systemd taskmanager (php -S 0.0.0.0:8000 -t public, dossier /var/www/html/taskmanager)
 - PHP 8.4, Symfony 7, Doctrine ORM
 - Serveur Symfony CLI inutilisable en root (PHP-FPM refuse root), d'où le serveur intégré PHP
-- Comptes de test prévus (fixtures non chargées) : admin@test.com, alice@test.com, bob@test.com, chloe@test.com, mot de passe : password
+- Gérer le serveur : systemctl start|stop|restart|status taskmanager (fichier /etc/systemd/system/taskmanager.service)
+- Logs du serveur : journalctl -u taskmanager -f
+- Après un changement de code ou de .env : php bin/console cache:clear puis systemctl restart taskmanager
+- Comptes de test prévus (fixtures non chargées) : admin@test.com, alice@test.com, bob@test.com, chloe@test.com, mot de passe : (voir fiche privée)
 
 ## 5. GitHub
 - Compte utilisé : maxiiram (edenthibault@gmail.com)
@@ -67,8 +70,20 @@
 - Logs : tail -f var/log/dev.log
 - Envoi GitHub : ~/push-github.sh "message"
 
-## 9. Avancement
+## 9. Changements récents
+- Projet déplacé dans /var/www/html/taskmanager (serveur PHP intégré, port 8000 conservé)
+- Script GitHub ~/push-github.sh : SRC pointe sur /var/www/html/taskmanager
+- Service systemd taskmanager : relance le serveur PHP au démarrage de la VM
+- Adminer (facultatif) : http://192.168.105.125:8080, système PostgreSQL, serveur 127.0.0.1, base taskmanager
+- CRUD généré avec make:crud : Projet (/projet), Tache (/tache), Utilisateur (/utilisateur)
+- Formulaires ProjetType et TacheType réécrits : dateCreation retirée (date automatique), enums en listes déroulantes, affecteA facultatif
+- Erreurs rencontrées : dateCreation sans setter, puis syntax error causée par un sed (corrigé en réécrivant les fichiers)
+- À corriger : hachage du mot de passe dans le formulaire Utilisateur (phase 2)
+
+## 10. Avancement
 - Phase 0 : environnement : fait
-- Phase 1 : entités, migration : commande unique à valider (schema:validate et \dt)
-- Phase 2 : authentification (make:auth, make:registration-form) : à faire
-- Phases 3 à 8 : projets, tâches, notifications, tableau de bord, recherche, tests : à faire
+- Phase 1 : entités conformes au MCD, migration : fait (validation schema:validate à confirmer)
+- CRUD de base Projet, Tache, Utilisateur : fait (en test)
+- Fixtures (comptes de test) : à faire
+- Phase 2 : authentification (make:auth, inscription, rôles, hachage) : à faire
+- Phases 3 à 8 : voters, tâches par projet, notifications, tableau de bord, recherche, tests : à faire
