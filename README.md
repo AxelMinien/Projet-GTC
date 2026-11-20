@@ -1,4 +1,4 @@
-# projet1
+# Projet GTC
 Gestionnaire de tâches collaboratif
 
 
