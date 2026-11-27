@@ -4,10 +4,14 @@
 
 {% block body %}
 
-
 <div class="site">
-  
+    
+    {% include 'partials/sidebar.html.twig' %}
 
+    <main class="content">
+        {# Contenu de la page: a mettre au fur et a mesure qu'on avance #}
+        
+    </main>
 
     <footer class="footer">
         <div class="wrap">© {{ 'now'|date('Y') }} TaskManager</div>
