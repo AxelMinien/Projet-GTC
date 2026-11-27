@@ -2,10 +2,22 @@
 
 {% block title %}New Projet{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .box { max-width: 500px; margin: 2rem auto; padding: 1.5rem; border: 1px solid #ddd; border-radius: 10px; }
+        .box form > div { margin-bottom: 1rem; }
+        .box label { display: block; font-weight: bold; margin-bottom: .3rem; }
+        .box input, .box textarea, .box select { width: 100%; padding: .5rem; box-sizing: border-box; }
+    </style>
+{% endblock %}
+
 {% block body %}
-    <h1>Create new Projet</h1>
+    <div class="box">
+        <h1>Create new Projet</h1>
 
-    {{ include('projet/_form.html.twig') }}
+        {{ include('projet/_form.html.twig') }}
 
-    <a href="{{ path('app_projet_index') }}">back to list</a>
+        <a href="{{ path('app_projet_index') }}"><button class="btn-solid btn-styled theme-secondary">Back to list</button></a>
+    </div>
 {% endblock %}

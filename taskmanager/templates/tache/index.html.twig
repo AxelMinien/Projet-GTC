@@ -3,12 +3,31 @@
 {% block title %}Tache index{% endblock %}
 
 {% block body %}
+    <style>
+        html, body {
+            background-color: #ffffff !important;
+        }
+
+        h1 {
+            color: #000000 !important;
+        }
+
+        .table,
+        .table thead,
+        .table tbody,
+        .table tr,
+        .table th,
+        .table td {
+            background-color: #6F7072 !important; 
+            color: #FFFFFF !important;         
+            border-color: #8A8B8D !important;
+        }
+    </style>
     <h1>Tache index</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Titre</th>
                 <th>Description</th>
                 <th>Statut</th>
@@ -21,16 +40,18 @@
         <tbody>
         {% for tache in taches %}
             <tr>
-                <td>{{ tache.id }}</td>
                 <td>{{ tache.titre }}</td>
                 <td>{{ tache.description }}</td>
-                <td>{{ tache.statut.value }}</td>
-                <td>{{ tache.priorite.value }}</td>
+                <td>{{ tache.statut.label }}</td>
+                <td>{{ tache.priorite.label }}</td>
                 <td>{{ tache.dateEcheance ? tache.dateEcheance|date('Y-m-d') : '' }}</td>
                 <td>{{ tache.dateCreation ? tache.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_tache_show', {'id': tache.id}) }}">show</a>
-                    <a href="{{ path('app_tache_edit', {'id': tache.id}) }}">edit</a>
+               <td>
+                    <div style="display:flex; gap:.5rem; align-items:center;">
+                        <a href="{{ path('app_tache_show', {'id': tache.id}) }}"><button class="btn-solid btn-styled theme-info">Show</button></a>
+                        <a href="{{ path('app_tache_edit', {'id': tache.id}) }}"><button class="btn-solid btn-styled theme-inverse">Edit</button></a>
+                        {{ include('tache/_delete_form.html.twig') }}
+                    </div>
                 </td>
             </tr>
         {% else %}
@@ -41,5 +62,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_tache_new') }}">Create new</a>
+    <a href="{{ path('app_tache_new') }}"><button class="btn-solid theme-secondary">Create new</button></a>
 {% endblock %}

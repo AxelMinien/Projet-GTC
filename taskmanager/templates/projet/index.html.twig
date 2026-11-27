@@ -3,8 +3,27 @@
 {% block title %}Projet index{% endblock %}
 
 {% block body %}
+    <style>
+        html, body {
+            background-color: #ffffff !important;
+        }
+
+        h1 {
+            color: #000000 !important;
+        }
+
+        .table,
+        .table thead,
+        .table tbody,
+        .table tr,
+        .table th,
+        .table td {
+            background-color: #6F7072 !important; 
+            color: #FFFFFF !important;         
+            border-color: #8A8B8D !important;
+        }
+    </style>
     <h1>Projet index</h1>
-    
 
     <table class="table">
         <thead>
@@ -16,26 +35,17 @@
             </tr>
         </thead>
         <tbody>
-        <style>
-            body,
-            .bg-primary,
-            .navbar,
-            .btn-primary,
-            .card-header,
-            header {
-                background-color: #8C8E90 !important;
-                border-color: #8C8E90 !important;
-                color: #000 !important;
-            }
-        </style>
         {% for projet in projets %}
             <tr>
                 <td>{{ projet.nom }}</td>
                 <td>{{ projet.description }}</td>
                 <td>{{ projet.dateCreation ? projet.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_projet_show', {'id': projet.id}) }}"><button class="btn-solid btn-styled theme-info">Show</button>
-                    <a href="{{ path('app_projet_edit', {'id': projet.id}) }}"><button class="btn-solid btn-styled theme-inverse">Edit</button>
+                    <div style="display:flex; gap:.5rem; align-items:center;">
+                        <a href="{{ path('app_projet_show', {'id': projet.id}) }}" class="btn-solid btn-styled theme-info">Show</a>
+                        <a href="{{ path('app_projet_edit', {'id': projet.id}) }}" class="btn-solid btn-styled theme-inverse">Edit</a>
+                        {{ include('projet/_delete_form.html.twig') }}
+                    </div>
                 </td>
             </tr>
         {% else %}
@@ -46,5 +56,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_projet_new') }}"><button class="btn-solid btn-styled theme-primary">Create New</button>
+    <a href="{{ path('app_projet_new') }}"><button class="btn-solid theme-secondary">Create new</button></a>
 {% endblock %}

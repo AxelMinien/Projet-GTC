@@ -15,7 +15,8 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-
+            custom_authenticators:
+                - App\Security\LoginAuthenticator
     access_control: []
 
 when@test:

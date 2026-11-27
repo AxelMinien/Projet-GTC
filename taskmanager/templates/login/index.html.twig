@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        html, body { background: #f3f4f5 !important; }
+
+        .login { font-family: "Segoe UI", Arial, sans-serif; color: #1f2328; max-width: 420px; margin: 0 auto; padding: 3rem 1.25rem; }
+        .login-brand { display: block; text-align: center; font-weight: 700; font-size: 1.4rem; color: #0e7c86; text-decoration: none; margin-bottom: 1.5rem; }
+
+        .box { background: #fff; border: 1px solid #dcdedf; border-top: 4px solid #0e7c86; border-radius: 10px; padding: 2rem 1.75rem; }
+        .box h1 { font-size: 1.6rem; margin: 0 0 .3rem; color: #1f2328 !important; }
+        .box .intro { color: #6f7072; margin: 0 0 1.5rem; }
+
+        .box form > div { margin-bottom: 1.1rem; }
+        .box label { display: block; font-weight: 600; margin-bottom: .35rem; }
+        .box input {
+            width: 100%; box-sizing: border-box; padding: .65rem .75rem;
+            background: #fff; color: #1f2328;
+            border: 1px solid #b9bcbe; border-radius: 6px; font-size: 1rem;
+        }
+        .box input:focus { outline: 3px solid rgba(14, 124, 134, .35); border-color: #0e7c86; }
+
+        .box button {
+            width: 100%; padding: .8rem 1rem; cursor: pointer; font-size: 1rem; font-weight: 600;
+            background: #0e7c86; color: #fff; border: 2px solid #0e7c86; border-radius: 6px;
+        }
+        .box button:hover { background: #0a5c64; border-color: #0a5c64; }
+        .box button:focus-visible { outline: 3px solid #1f2328; outline-offset: 2px; }
+
+        .success { background: #dcfce7; color: #166534; padding: .7rem .9rem; border-radius: 6px; margin-bottom: 1rem; }
+        .error { background: #fee2e2; color: #b91c1c; padding: .7rem .9rem; border-radius: 6px; margin-bottom: 1rem; }
+
+        .links { margin-top: 1.25rem; text-align: center; color: #6f7072; }
+        .links a { color: #0e7c86; font-weight: 600; text-decoration: none; }
+        .links a:hover { text-decoration: underline; }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <main class="login">
+        <a class="login-brand" href="{{ path('app_acceuille') }}">TaskManager</a>
+
+        <div class="box">
+            <h1>Connexion</h1>
+            <p class="intro">Entrez vos identifiants pour accéder à vos projets.</p>
+
+            {% for message in app.flashes('success') %}
+                <div class="success" role="status">✅ {{ message }}</div>
+            {% endfor %}
+
+            {% if utilisateur %}
+                <div class="success" role="status">✅ Connexion réussie ! Bienvenue {{ utilisateur.nomComplet }}</div>
+                <meta http-equiv="refresh" content="3; url={{ path('app_acceuille') }}">
+            {% endif %}
+
+            {% if erreur %}
+                <div class="error" role="alert">❌ {{ erreur }}</div>
+            {% endif %}
+
+            <form method="post">
+                <div>
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" value="{{ email }}" autocomplete="email" required autofocus>
+                </div>
+
+                <div>
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" name="password" autocomplete="current-password" required>
+                </div>
+
+                <button type="submit">Se connecter</button>
+            </form>
+
+            <div class="links">
+                Pas encore de compte ? <a href="{{ path('app_inscription') }}">Créer un compte</a>
+            </div>
+        </div>
+    </main>
+{% endblock %}

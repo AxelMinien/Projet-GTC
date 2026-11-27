@@ -3,6 +3,26 @@
 {% block title %}Utilisateur index{% endblock %}
 
 {% block body %}
+    <style>
+        html, body {
+            background-color: #ffffff !important;
+        }
+
+        h1 {
+            color: #000000 !important;
+        }
+
+        .table,
+        .table thead,
+        .table tbody,
+        .table tr,
+        .table th,
+        .table td {
+            background-color: #6F7072 !important; 
+            color: #FFFFFF !important;         
+            border-color: #8A8B8D !important;
+        }
+    </style>
     <h1>Utilisateur index</h1>
 
     <table class="table">
@@ -11,7 +31,6 @@
                 <th>Nom</th>
                 <th>Prenom</th>
                 <th>Email</th>
-                <th>MotDePasse</th>
                 <th>Role</th>
                 <th>actions</th>
             </tr>
@@ -22,12 +41,13 @@
                 <td>{{ utilisateur.nom }}</td>
                 <td>{{ utilisateur.prenom }}</td>
                 <td>{{ utilisateur.email }}</td>
-                <td>{{ utilisateur.motDePasse }}</td>
                 <td>{{ utilisateur.role }}</td>
                 <td>
-                    <a href="{{ path('app_utilisateur_show', {'id': utilisateur.id}) }}">show</a>
-                    <a href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}">edit</a>
-                      {{ include('utilisateur/_delete_form.html.twig') }}
+                    <div style="display:flex; gap:.5rem; align-items:center;">
+                        <a href="{{ path('app_utilisateur_show', {'id': utilisateur.id}) }}" class="btn-solid btn-styled theme-info">Show</a>
+                        <a href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}" class="btn-solid btn-styled theme-inverse">Edit</a>
+                        {{ include('utilisateur/_delete_form.html.twig') }}
+                    </div>
                 </td>
             </tr>
         {% else %}
@@ -38,5 +58,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_utilisateur_new') }}">Create new</a>
+   <a href="{{ path('app_utilisateur_new') }}"><button class="btn-solid btn-styled theme-secondary">Create new</button></a>
 {% endblock %}
